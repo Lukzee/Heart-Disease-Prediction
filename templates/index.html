@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+     <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: auto;
+            margin-top: 30px;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1 class="mb-4">Heart Disease Prediction</h1>
+            <form action="/predict" method="post">
+                {% for col in feature_cols %}
+                    <div class="form-group">
+                        <label for="{{ col }}">{{ col|capitalize }}</label>
+                        <input type="number" step="any" class="form-control" name="{{ col }}" id="{{ col }}" placeholder="{{ sample_data[col] }}" required>
+                        <small class="form-text text-muted">Example: {{ sample_data[col] }}</small>
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-block">Predict</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

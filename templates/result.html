@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .result-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .model-section {
+            margin-bottom: 30px;
+        }
+        hr {
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result-container">
+            <h1 class="mb-4">Prediction Results</h1>
+            <h3 class="mb-4">Ultimate Prediction (Random Forest): {{ final_result }}</h3>
+            {% if final_result == 1 %}
+                <p class="text-danger font-weight-bold">
+                    Interpretation: The patient is predicted to have heart disease. It is strongly advised to consult with a healthcare professional for further evaluation.
+                </p>
+            {% else %}
+                <p class="text-success font-weight-bold">
+                    Interpretation: The patient is predicted not to have heart disease. However, regular health check-ups and a healthy lifestyle are recommended.
+                </p>
+            {% endif %}
+            <hr>
+            {% for model, result in results.items() %}
+                <div class="model-section">
+                    <h4>{{ model }}</h4>
+                    <p>Prediction: {{ result.prediction }}</p>
+                    {% if result.probability is not none %}
+                        <p>Probabilities: {{ result.probability }}</p>
+                    {% endif %}
+                    <img src="data:image/png;base64,{{ graphs[model] }}" class="img-fluid" alt="{{ model }} graph">
+                </div>
+                <hr>
+            {% endfor %}
+            <a href="/" class="btn btn-secondary btn-block">Try Again</a>
+        </div>
+    </div>
+</body>
+</html>
